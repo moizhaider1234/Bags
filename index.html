@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Jost', sans-serif; background: #faf8f5; color: #1a1714; }
+
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem; background: #1a1714; position: sticky; top: 0; z-index: 100;
+  }
+  .logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #e8d5b0; letter-spacing: 0.05em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: #c9b99a; text-decoration: none; font-size: 0.85rem; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: #e8d5b0; }
+  .nav-right { display: flex; align-items: center; gap: 1.2rem; }
+  .cart-btn { background: #c9a96e; color: #1a1714; border: none; padding: 0.5rem 1.2rem; font-family: 'Jost', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; font-weight: 500; }
+
+  .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 88vh; background: #1a1714; }
+  .hero-text { display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem; color: #faf8f5; }
+  .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: #c9a96e; margin-bottom: 1.5rem; font-weight: 300; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: 3.8rem; line-height: 1.1; margin-bottom: 1.5rem; color: #f5ede0; }
+  .hero-title em { font-style: italic; color: #c9a96e; }
+  .hero-sub { font-size: 0.95rem; font-weight: 300; line-height: 1.8; color: #a89880; max-width: 340px; margin-bottom: 2.5rem; }
+  .hero-cta { display: flex; gap: 1rem; }
+  .btn-primary { background: #c9a96e; color: #1a1714; border: none; padding: 0.9rem 2rem; font-family: 'Jost', sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; border-radius: 2px; font-weight: 500; transition: background 0.2s; }
+  .btn-primary:hover { background: #e8d5b0; }
+  .btn-outline { background: transparent; color: #e8d5b0; border: 1px solid #4a3f30; padding: 0.9rem 2rem; font-family: 'Jost', sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; border-radius: 2px; font-weight: 300; transition: all 0.2s; }
+  .btn-outline:hover { border-color: #c9a96e; color: #c9a96e; }
+
+  .hero-visual { position: relative; overflow: hidden; background: linear-gradient(135deg, #2d2520 0%, #1a1714 100%); display: flex; align-items: center; justify-content: center; }
+  .hero-bag-display { position: relative; width: 340px; height: 380px; }
+  .bag-main { width: 220px; height: 200px; background: #c9a96e; border-radius: 8px 8px 60px 60px; position: absolute; top: 80px; left: 50%; transform: translateX(-50%); box-shadow: 0 30px 60px rgba(0,0,0,0.5); animation: float 4s ease-in-out infinite; }
+  .bag-handle-left { width: 6px; height: 80px; background: #a8853e; border-radius: 6px 6px 0 0; position: absolute; top: 10px; left: 75px; transform: rotate(-12deg); transform-origin: bottom center; }
+  .bag-handle-right { width: 6px; height: 80px; background: #a8853e; border-radius: 6px 6px 0 0; position: absolute; top: 10px; right: 75px; transform: rotate(12deg); transform-origin: bottom center; }
+  .bag-clasp { width: 28px; height: 16px; background: #7a5a20; border-radius: 14px; position: absolute; top: 78px; left: 50%; transform: translateX(-50%); border: 2px solid #c9a96e; }
+  .bag-line { position: absolute; top: 105px; left: 50%; transform: translateX(-50%); width: 160px; height: 1px; background: rgba(255,255,255,0.15); }
+  .bag-shadow { width: 180px; height: 20px; background: rgba(0,0,0,0.4); border-radius: 50%; position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); filter: blur(12px); }
+  .badge-new { position: absolute; top: 40px; right: 20px; background: #c9a96e; color: #1a1714; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 2px; font-weight: 500; }
+  .hero-deco-line { position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, #c9a96e40, transparent); }
+
+  .section { padding: 5rem 3rem; }
+  .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .section-eyebrow { font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: #c9a96e; margin-bottom: 0.8rem; font-weight: 300; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: #1a1714; }
+
+  .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+  .product-card { background: #fff; border-radius: 4px; overflow: hidden; cursor: pointer; transition: transform 0.3s; }
+  .product-card:hover { transform: translateY(-6px); }
+  .product-card:hover .card-overlay { opacity: 1; }
+  .card-visual { position: relative; height: 240px; display: flex; align-items: center; justify-content: center; }
+  .card-overlay { position: absolute; inset: 0; background: rgba(26,23,20,0.55); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+  .card-overlay button { background: #c9a96e; color: #1a1714; border: none; padding: 0.65rem 1.4rem; font-family: 'Jost', sans-serif; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; font-weight: 500; }
+  .card-info { padding: 1.2rem 1.4rem; border-top: 1px solid #f0ebe3; }
+  .card-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin-bottom: 0.3rem; color: #1a1714; }
+  .card-sub { font-size: 0.78rem; color: #8a7d6e; font-weight: 300; letter-spacing: 0.05em; margin-bottom: 0.8rem; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .card-price { font-size: 1rem; font-weight: 500; color: #1a1714; }
+  .card-old { font-size: 0.8rem; color: #aaa; text-decoration: line-through; margin-left: 6px; }
+
+  .bag-icon { position: relative; }
+  .bag-body { width: 80px; height: 72px; border-radius: 4px 4px 28px 28px; position: relative; }
+  .bag-h-left { position: absolute; width: 3px; height: 28px; background: inherit; top: -32px; left: 20px; border-radius: 3px; opacity: 0.7; transform: rotate(-8deg); transform-origin: bottom; }
+  .bag-h-right { position: absolute; width: 3px; height: 28px; background: inherit; top: -32px; right: 20px; border-radius: 3px; opacity: 0.7; transform: rotate(8deg); transform-origin: bottom; }
+
+  .features { background: #1a1714; color: #faf8f5; }
+  .features .section-title { color: #f5ede0; }
+  .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 1000px; margin: 0 auto; text-align: center; }
+  .feature-item { padding: 1rem; }
+  .feature-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .feature-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: #e8d5b0; margin-bottom: 0.5rem; }
+  .feature-desc { font-size: 0.82rem; color: #7a6e61; font-weight: 300; line-height: 1.7; }
+
+  .banner { background: #c9a96e; padding: 3.5rem 3rem; text-align: center; }
+  .banner-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: #1a1714; margin-bottom: 0.8rem; }
+  .banner-sub { font-size: 0.9rem; color: #4a3a20; font-weight: 300; margin-bottom: 2rem; letter-spacing: 0.05em; }
+
+  footer { background: #0e0c0a; padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; }
+  .footer-logo { font-family: 'Playfair Display', serif; color: #5a4f40; font-size: 1rem; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { color: #3a3530; text-decoration: none; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 300; }
+  .footer-copy { font-size: 0.72rem; color: #3a3530; font-weight: 300; }
+
+  @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-12px)} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">The Online Store</div>
+  <ul class="nav-links">
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">New In</a></li>
+    <li><a href="#">Sale</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn">Cart (0)</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">New Collection — 2026</p>
+    <h1 class="hero-title">Carry Your<br><em>Story</em><br>With Grace</h1>
+    <p class="hero-sub">Handcrafted ladies handbags designed for the modern woman — timeless elegance, everyday luxury.</p>
+    <div class="hero-cta">
+      <button class="btn-primary">Shop Now</button>
+      <button class="btn-outline">View Lookbook</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-deco-line"></div>
+    <div class="hero-bag-display">
+      <div class="bag-handle-left"></div>
+      <div class="bag-handle-right"></div>
+      <div class="bag-main">
+        <div class="bag-clasp"></div>
+        <div class="bag-line"></div>
+      </div>
+      <div class="bag-shadow"></div>
+    </div>
+    <span class="badge-new">New Arrival</span>
+  </div>
+</section>
+
+<section class="section" style="background:#faf8f5;">
+  <div class="section-header">
+    <p class="section-eyebrow">Curated For You</p>
+    <h2 class="section-title">Featured Handbags</h2>
+  </div>
+  <div class="product-grid">
+
+    <div class="product-card">
+      <div class="card-visual" style="background:#f5ede0;">
+        <div class="bag-icon">
+          <div class="bag-body" style="background:#c9a96e; width:90px; height:80px; border-radius:6px 6px 30px 30px;">
+            <div class="bag-h-left" style="background:#a8853e;"></div>
+            <div class="bag-h-right" style="background:#a8853e;"></div>
+          </div>
+        </div>
+        <div class="card-overlay"><button>Quick View</button></div>
+      </div>
+      <div class="card-info">
+        <p class="card-name">Amber Tote</p>
+        <p class="card-sub">Genuine leather · Camel</p>
+        <div class="card-footer">
+          <span class="card-price">$30.00</span>
+          <span style="font-size:0.7rem;color:#c9a96e;letter-spacing:0.08em;text-transform:uppercase;">New</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-visual" style="background:#ede8f0;">
+        <div class="bag-icon">
+          <div class="bag-body" style="background:#7a5a8a; width:70px; height:88px; border-radius:6px 6px 12px 12px;">
+            <div class="bag-h-left" style="background:#5a3a6a;"></div>
+            <div class="bag-h-right" style="background:#5a3a6a;"></div>
+          </div>
+        </div>
+        <div class="card-overlay"><button>Quick View</button></div>
+        <span style="position:absolute;top:12px;left:12px;background:#e24b4a;color:#fff;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.6rem;border-radius:2px;">Sale</span>
+      </div>
+      <div class="card-info">
+        <p class="card-name">Violet Clutch</p>
+        <p class="card-sub">Suede · Deep Plum</p>
+        <div class="card-footer">
+          <span><span class="card-price">$15.00</span><span class="card-old">$21.00</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-visual" style="background:#e8ede8;">
+        <div class="bag-icon">
+          <div class="bag-body" style="background:#3b6d45; width:100px; height:68px; border-radius:6px 6px 40px 40px;">
+            <div class="bag-h-left" style="background:#254d30;"></div>
+            <div class="bag-h-right" style="background:#254d30;"></div>
+          </div>
+        </div>
+        <div class="card-overlay"><button>Quick View</button></div>
+      </div>
+      <div class="card-info">
+        <p class="card-name">Forest Satchel</p>
+        <p class="card-sub">Vegan leather · Sage Green</p>
+        <div class="card-footer">
+          <span class="card-price">$24.00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-visual" style="background:#f0e8e8;">
+        <div class="bag-icon">
+          <div class="bag-body" style="background:#b05a5a; width:75px; height:95px; border-radius:6px 6px 8px 8px;">
+            <div class="bag-h-left" style="background:#883030;"></div>
+            <div class="bag-h-right" style="background:#883030;"></div>
+          </div>
+        </div>
+        <div class="card-overlay"><button>Quick View</button></div>
+      </div>
+      <div class="card-info">
+        <p class="card-name">Ruby Mini Bag</p>
+        <p class="card-sub">Patent leather · Crimson</p>
+        <div class="card-footer">
+          <span class="card-price">$14.00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-visual" style="background:#e8e5de;">
+        <div class="bag-icon">
+          <div class="bag-body" style="background:#8a8070; width:110px; height:70px; border-radius:6px 6px 50px 50px;">
+            <div class="bag-h-left" style="background:#6a6050;"></div>
+            <div class="bag-h-right" style="background:#6a6050;"></div>
+          </div>
+        </div>
+        <div class="card-overlay"><button>Quick View</button></div>
+      </div>
+      <div class="card-info">
+        <p class="card-name">Classic Shopper</p>
+        <p class="card-sub">Canvas & leather · Taupe</p>
+        <div class="card-footer">
+          <span class="card-price">$20.00</span>
+          <span style="font-size:0.7rem;color:#c9a96e;letter-spacing:0.08em;text-transform:uppercase;">Best Seller</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-visual" style="background:#0e0c0a;">
+        <div class="bag-icon">
+          <div class="bag-body" style="background:#2a2520; width:85px; height:78px; border-radius:6px 6px 20px 20px; border: 2px solid #c9a96e;">
+            <div class="bag-h-left" style="background:#c9a96e;"></div>
+            <div class="bag-h-right" style="background:#c9a96e;"></div>
+          </div>
+        </div>
+        <div class="card-overlay"><button>Quick View</button></div>
+      </div>
+      <div class="card-info">
+        <p class="card-name">Noir Evening Bag</p>
+        <p class="card-sub">Velvet · Midnight Black</p>
+        <div class="card-footer">
+          <span class="card-price">$26.00</span>
+          <span style="font-size:0.7rem;color:#c9a96e;letter-spacing:0.08em;text-transform:uppercase;">Premium</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section features">
+  <div class="section-header">
+    <p class="section-eyebrow">Why Choose Us</p>
+    <h2 class="section-title">Crafted With Care</h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-item">
+      <div class="feature-icon">✦</div>
+      <p class="feature-title">Premium Materials</p>
+      <p class="feature-desc">Every bag sourced from the finest leather and fabrics worldwide</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">◈</div>
+      <p class="feature-title">Free Delivery</p>
+      <p class="feature-desc">Complimentary shipping on all orders over $50</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">◇</div>
+      <p class="feature-title">Easy Returns</p>
+      <p class="feature-desc">7-day hassle-free return policy, no questions asked</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">⬡</div>
+      <p class="feature-title">Authenticity</p>
+      <p class="feature-desc">Certificate of authenticity with every premium purchase</p>
+    </div>
+  </div>
+</section>
+
+<section class="banner">
+  <h2 class="banner-title">New Season, New You</h2>
+  <p class="banner-sub">Sign up and get 15% off your first order</p>
+  <div style="display:flex;gap:0;max-width:420px;margin:0 auto;">
+    <input type="email" placeholder="Your email address" style="flex:1;padding:0.85rem 1.2rem;border:none;background:#1a1714;color:#e8d5b0;font-family:'Jost',sans-serif;font-size:0.85rem;border-radius:2px 0 0 2px;outline:none;">
+    <button style="background:#1a1714;color:#c9a96e;border:none;padding:0.85rem 1.4rem;font-family:'Jost',sans-serif;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;border-radius:0 2px 2px 0;font-weight:500;">Subscribe</button>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">The Online Store</span>
+  <ul class="footer-links">
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 The Online Store</span>
+</footer>
+
+</body>
+</html>
